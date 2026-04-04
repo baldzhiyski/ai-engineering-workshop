@@ -1,0 +1,25 @@
+Security Incident Report
+
+System: Customer Portal
+Date: 2026-04-04
+
+Summary:
+Users reported repeated login failures and temporary account lockouts.
+
+Observed Symptoms:
+Authentication requests increased sharply over a short period.
+Several IP addresses attempted repeated login attempts against multiple accounts.
+
+Investigation Findings:
+The issue was caused by a credential stuffing attack.
+No evidence was found that the authentication database itself was breached.
+
+Impact:
+Some users were temporarily locked out of their accounts.
+Support requests increased significantly during the incident window.
+
+Recommended Actions:
+Enable stronger rate limiting on login endpoints.
+Add anomaly detection for repeated failed logins.
+Force password reset for suspicious accounts.
+Enable multi-factor authentication for high-risk users.

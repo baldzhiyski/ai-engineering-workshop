@@ -33,6 +33,10 @@ class Settings(BaseSettings):
         default="langchain-agentic-platform",
         alias="LANGSMITH_PROJECT",
     )
+    langsmith_endpoint: str = Field(
+        default="https://api.smith.langchain.com",
+        alias="LANGSMITH_ENDPOINT",
+    )
 
     app_name: str = "LangChain Agentic Platform"
     debug: bool = Field(default=True, alias="DEBUG")
