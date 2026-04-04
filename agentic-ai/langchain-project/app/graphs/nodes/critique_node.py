@@ -16,6 +16,6 @@ def critique_node(state: WorkflowState):
     structured_model = model.with_structured_output(CritiqueReport)
     critique = structured_model.invoke([
         SystemMessage(content=CRITIC_PROMPT),
-        HumanMessage(content=f"User Input: {state['user_input']}\nPlan: {state['plan']}\nRetrieved Context: {state['retrieved_context']}\nTool Results: {state['tool_results']}\nDraft Answer: {state['draft_answer']}"),
+        HumanMessage(content=f"User Input: {state.user_input}\nPlan: {state.plan}\nRetrieved Context: {state.retrieved_context}\nTool Results: {state.tool_results}\nDraft Answer: {state.draft_answer}"),
     ])
     return {"critique": critique}

@@ -6,7 +6,7 @@ from langchain.messages import SystemMessage, HumanMessage
 
 
 def execute_tools_node(state: WorkflowState):
-    if not state["plan"] or not state["plan"].needs_tools:
+    if not state.plan or not state.plan.needs_tools:
         return {"tool_results": []}
 
     agent = create_agent(
@@ -19,8 +19,7 @@ def execute_tools_node(state: WorkflowState):
         "messages":
         [
             SystemMessage(content="You are an agent that executes tools based on the user's plan."),
-            HumanMessage(content=f"User Input: {state['user_input']}\nPlan: {state['plan']}")
-        ]
+            HumanMessage(content=f"User Input: {state.user_input}\nPlan: {state.plan}")    ]
     })
 
     return {"tool_results": [str(result)]}

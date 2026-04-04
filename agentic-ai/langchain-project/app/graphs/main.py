@@ -6,24 +6,49 @@ from ..graphs.nodes.tool_node import execute_tools_node
 from ..graphs.nodes.syntesis_node import synthesize_node
 from ..graphs.nodes.critique_node import critique_node
 from ..graphs.nodes.revise_node import revise_node
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def after_critique(state: WorkflowState):
-    critique = state.get("critique")
-    if critique and critique.revision_needed and state.get("retries", 0) < 1:
-        return "revise"
-    return "end"
+    # Always proceed to the revise node. The revise node will copy the
+    # draft_answer into final_answer when no revision is requested by the
+    # critic, and will perform a revision when needed. This ensures that
+    # a `final_answer` field is present in the terminal state.
+    return "revise"
+
+
+def _make_logging_node(name: str, fn):
+    """Return a wrapper around node `fn` which logs entry, exit, and errors.
+
+    The wrapper logs a compact snapshot of the state's key fields so the
+    log stream shows which nodes ran and what they returned.
+    """
+
+    def wrapper(state: WorkflowState):
+        try:
+            logger.info("GRAPH NODE START [%s] user_input=%s plan=%s", name, getattr(state, "user_input", None), getattr(state, "plan", None))
+            result = fn(state)
+            logger.info("GRAPH NODE END   [%s] result=%s", name, result)
+            return result
+        except Exception:
+            logger.exception("GRAPH NODE ERROR [%s]", name)
+            raise
+
+    return wrapper
 
 
 def build_workflow_graph():
     graph = StateGraph(WorkflowState)
 
-    graph.add_node("plan", plan_node)
-    graph.add_node("retrieve", retrieve_node)
-    graph.add_node("tools", execute_tools_node)
-    graph.add_node("synthesize", synthesize_node)
-    graph.add_node("critique", critique_node)
-    graph.add_node("revise", revise_node)
+    # Wrap each node with logging to make execution visible in the logs
+    graph.add_node("plan", _make_logging_node("plan", plan_node))
+    graph.add_node("retrieve", _make_logging_node("retrieve", retrieve_node))
+    graph.add_node("tools", _make_logging_node("tools", execute_tools_node))
+    graph.add_node("synthesize", _make_logging_node("synthesize", synthesize_node))
+    graph.add_node("critique", _make_logging_node("critique", critique_node))
+    graph.add_node("revise", _make_logging_node("revise", revise_node))
 
     graph.add_edge(START, "plan")
     graph.add_edge("plan", "retrieve")

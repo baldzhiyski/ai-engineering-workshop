@@ -1,7 +1,7 @@
-from app.db.session import SessionLocal
-from app.db.repositories.chat_repository import ChatRepository
-from app.db.repositories.workflow_repository import WorkflowRepository
-from app.db.checkpoint.checkpointer import SimpleCheckpointer
+from ..app.db.session import SessionLocal
+from ..app.db.repository.chat_repository import ChatRepository
+from ..app.db.repository.workflow_repository import WorkflowRepository
+from ..app.db.checkpoint.checkpointer import SimpleCheckpointer
 
 
 def main():

@@ -1,0 +1,16 @@
+Incident Report
+
+System: Payment Processing Service
+Date: 2026-04-04
+
+Summary:
+The service experienced repeated failures during invoice generation.
+
+Observed Issue:
+Several requests timed out after a configuration deployment.
+
+Root Cause:
+A misconfigured database connection pool caused resource exhaustion.
+
+Recommended Action:
+Rollback the faulty configuration, increase monitoring, and validate connection pool settings before future deployments.

@@ -1,6 +1,6 @@
 from ...llms.models import get_general_model
 from ..state import WorkflowState
-from langchain_core.messages import UserMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 
 SYNTHESIS_PROMPT = """
 You are a synthesis agent.
@@ -14,16 +14,16 @@ def synthesize_node(state: WorkflowState):
     model = get_general_model()
     content = f"""
 Plan:
-{state['plan']}
+{state.plan}\n
 
 Retrieved context:
-{state['retrieved_context']}
+{state.retrieved_context}
 
 Tool results:
-{state['tool_results']}
+{state.tool_results} = model.invoke([
 """
     result = model.invoke([
         SystemMessage(content=SYNTHESIS_PROMPT),
-        UserMessage(content=content)
+        HumanMessage(content=content)
     ])
     return {"draft_answer": result.content}

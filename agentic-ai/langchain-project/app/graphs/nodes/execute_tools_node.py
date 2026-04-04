@@ -5,7 +5,7 @@ from ..state import WorkflowState
 from langchain_core.messages import UserMessage,SystemMessage
 
 def execute_tools_node(state: WorkflowState):
-    if not state["plan"] or not state["plan"].needs_tools:
+    if not state.plan or not state.plan.needs_tools:
         return {"tool_results": []}
 
     agent = create_agent(
@@ -17,7 +17,7 @@ def execute_tools_node(state: WorkflowState):
     result = agent.invoke({
         "messages": [
             SystemMessage(content="You are an agent that executes tools based on the user's plan."),
-            UserMessage(content=f"User Input: {state['user_input']}\nPlan: {state['plan']}")
+            UserMessage(content=f"User Input: {state.user_input}\nPlan: {state.plan}")
         ]
     })
 
