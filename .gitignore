@@ -2,3 +2,7 @@
 *.csv
 .idea
 *.env
+
+./agentic-ai/LangChain-Mastery-main
+./agentic-ai/langgraph-project/a2a-holiday-planner-main
+./agentic-ai/langgraph-project/LangGraph-Mastery-main
