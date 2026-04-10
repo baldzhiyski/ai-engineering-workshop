@@ -2,6 +2,7 @@
 from __future__ import annotations
 from pydantic import BaseModel, Field
 from langchain.agents import create_agent
+from ..middleware.groups import coach_middleware
 from ..config import settings
 
 class CoachResponse(BaseModel):
@@ -20,6 +21,7 @@ def build_coach_agent(*, store=None):
     return create_agent(
         model=settings.coach_model,
         tools=[],
+        middleware= coach_middleware(),
         system_prompt=COACH_PROMPT,
         response_format=CoachResponse,
         store=store,

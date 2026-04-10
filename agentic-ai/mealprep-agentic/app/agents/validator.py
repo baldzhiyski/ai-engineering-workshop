@@ -1,6 +1,7 @@
 from __future__ import annotations
 from langchain.agents import create_agent
 from ..domain.models import ValidationReport
+from ..middleware.groups import validator_middleware
 from ..config import settings
 
 VALIDATOR_PROMPT = """
@@ -20,6 +21,7 @@ def build_validator_agent(*, store=None):
     return create_agent(
         model=settings.validator_model,
         tools=[],
+        middleware= validator_middleware(),
         system_prompt=VALIDATOR_PROMPT,
         response_format=ValidationReport,
         store=store,

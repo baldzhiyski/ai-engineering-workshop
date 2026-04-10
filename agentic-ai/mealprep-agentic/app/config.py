@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     anthropic_api_key: str | None = None
     langsmith_api_key: str | None = None
     langsmith_tracing: bool = True
-    langsmith_project: str 
+    langsmith_project: str
 
     default_model: str
     fast_model: str
@@ -38,6 +38,8 @@ class Settings(BaseSettings):
 
     default_locale: str = "en"
     default_unit_system: str = "metric"
+    additional_models: list[str] = ["antropic/claude-2", "gpt-4o"]
+
 
     max_recipe_results: int = 8
     default_memory_search_limit: int = 5
