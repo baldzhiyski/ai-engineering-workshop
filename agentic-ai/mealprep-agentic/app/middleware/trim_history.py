@@ -24,7 +24,7 @@ def trim_message_history(state: AgentState, runtime: Runtime) -> dict[str, Any] 
     }
 
 summarizer = SummarizationMiddleware(
-    model="openai:gpt-4.1-mini",
+    model="gpt-5.4-mini",
     max_tokens_before_summary=8000,
     keep_last_n_messages=8,
 )
