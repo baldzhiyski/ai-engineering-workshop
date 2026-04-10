@@ -1,58 +1,57 @@
 [project]
 name = "ai-engineering-workshop"
 version = "0.1.0"
-description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
-    "aiosqlite>=0.22.1",
-    "catboost>=1.2.8",
-    "cufflinks>=0.17.3",
-    "faiss-cpu>=1.13.2",
-    "graphviz>=0.21",
-    "gymnasium[classic-control]>=1.2.3",
-    "imblearn>=0.0",
-    "ipykernel>=6.30.1",
-    "keras-tuner>=1.4.8",
-    "langchain>=1.2.15",
-    "langchain-community>=0.4.1",
-    "langchain-openai>=1.1.12",
-    "langchain-text-splitters>=1.1.1",
-    "langgraph>=1.1.6",
-    "langsmith>=0.7.25",
-    "lightgbm>=4.6.0",
-    "markupsafe>=3.0.3",
-    "matplotlib>=3.10.7",
-    "mdutils>=1.8.0",
-    "mlflow>=3.8.1",
-    "nbformat>=5.10.4",
-    "nltk>=3.9.2",
-    "notebook>=7.4.7",
-    "numpy>=2.3.3",
-    "opendatasets>=0.1.22",
-    "openpyxl>=3.1.5",
-    "optuna>=4.6.0",
-    "pandas>=2.3.3",
-    "pandas-stubs==2.3.2.250926",
-    "plotly>=6.3.1",
-    "pyarrow>=21.0.0",
-    "pyjanitor>=0.31.0",
-    "pymongo>=4.15.5",
-    "pypdf>=6.9.2",
-    "python-docx>=1.2.0",
-    "redis>=7.1.0",
-    "scikit-learn>=1.7.2",
-    "scipy-stubs==1.16.3.1",
-    "scrapy>=2.13.3",
-    "seaborn>=0.13.2",
-    "selenium>=4.38.0",
-    "shap>=0.49.1",
-    "stable-baselines3>=2.7.1",
-    "statsmodels>=0.14.5",
-    "streamlit>=1.53.0",
-    "tensorboard>=2.20.0",
-    "tensorflow>=2.20.0",
-    "tiktoken>=0.12.0",
-    "wordcloud>=1.9.4",
-    "xgboost>=3.1.2",
-    "zenml[local,server]>=0.93.1",
+  "langchain>=1.2.15",
+  "langgraph>=1.1.6",
+  "langchain-openai>=1.1.12",
+  "langsmith>=0.7.25",
+  "tiktoken>=0.12.0",
+  "pypdf>=6.9.2",
+  "pandas>=2.3.3",
+  "ipykernel>=7.2.0",
+]
+
+[project.optional-dependencies]
+rag = [
+  "faiss-cpu>=1.13.2",
+  "langchain-text-splitters>=1.1.1",
+]
+
+ml = [
+  "scikit-learn>=1.7.2",
+  "xgboost>=3.1.2",
+  "lightgbm>=4.6.0",
+  "catboost>=1.2.8",
+  "imbalanced-learn>=0.14.1",
+  "optuna>=4.6.0",
+  "shap>=0.49.1",
+]
+
+dl = [
+  "tensorflow>=2.20.0",
+  "tensorboard>=2.20.0",
+  "keras-tuner>=1.4.8",
+]
+
+rl = [
+  "gymnasium[classic-control]>=1.2.3",
+  "stable-baselines3>=2.7.1",
+]
+
+scraping = [
+  "scrapy>=2.13.3",
+  "selenium>=4.38.0",
+]
+
+notebooks = [
+  "ipykernel>=6.30.1",
+  "notebook>=7.4.7",
+  "nbformat>=5.10.4",
+]
+
+ops = [
+  "mlflow>=3.8.1",
+  "zenml[local,server]>=0.93.1",
 ]
