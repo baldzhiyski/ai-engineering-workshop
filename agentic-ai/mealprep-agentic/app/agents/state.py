@@ -1,4 +1,7 @@
 # app/agents/state.py
+import operator
+from typing import Any, Annotated
+
 from langchain.agents import AgentState
 from typing_extensions import NotRequired
 
@@ -11,4 +14,4 @@ class NutritionAgentState(AgentState):
     user_goal_locked: NotRequired[bool]
     supplement_review_required: NotRequired[bool]
     final_output_checked: NotRequired[bool]
-    audit_events: NotRequired[list[dict]]
+    audit_events: NotRequired[Annotated[list[dict[str, Any]], operator.add]]

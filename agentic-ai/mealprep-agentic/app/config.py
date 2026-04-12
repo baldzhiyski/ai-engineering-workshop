@@ -3,14 +3,19 @@ from __future__ import annotations
 
 from functools import lru_cache
 from dotenv import load_dotenv
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
 
-load_dotenv()
+# Load the .env located in the same directory as this file (app/.env)
+_here = os.path.dirname(__file__)
+load_dotenv(os.path.join(_here, ".env"))
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        # Ensure pydantic reads the per-app .env file as well
+        env_file=os.path.join(_here, ".env"),
         extra="ignore",
     )
 
@@ -29,17 +34,17 @@ class Settings(BaseSettings):
     anthropic_api_key: str | None = None
     langsmith_api_key: str | None = None
     langsmith_tracing: bool = True
-    langsmith_project: str
+    langsmith_project: str = "mealprep-agentic-prod"
 
-    default_model: str
-    fast_model: str
-    validator_model: str
-    coach_model: str
+    default_model: str = "openai:gpt-4.1"
+    fast_model: str = "openai:gpt-4.1-mini"
+    validator_model: str = "openai:gpt-4.1-mini"
+    coach_model: str = "openai:gpt-4.1-mini"
 
     default_locale: str = "en"
     default_unit_system: str = "metric"
-    additional_models: list[str] = ["antropic/claude-2", "gpt-4o"]
 
+    additional_models: str =  "openai:gpt-4o"
 
     max_recipe_results: int = 8
     default_memory_search_limit: int = 5

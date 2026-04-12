@@ -27,5 +27,4 @@ class NutritionModelRouter(AgentMiddleware):
         if risk == "high" or msg_count > 12:
             chosen = self.cfg.strong_model
 
-        request = request.override(model=chosen)
-        return handler(request)
+        return handler(request.override(model=chosen))
