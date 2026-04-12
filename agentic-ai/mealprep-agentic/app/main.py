@@ -63,6 +63,24 @@ def root():
 def health():
     return {"status": "healthy"}
 
+
+def format_completed_response(thread_id: str, result: dict) -> dict:
+    return {
+        "status": "completed",
+        "thread_id": thread_id,
+        "plan": result.get("final_plan"),
+        "review": {
+            "approval_status": result.get("approval_status"),
+            "approval_required": result.get("approval_required"),
+            "risk_flags": result.get("risk_flags", []),
+            "errors": result.get("errors", []),
+            "revision_count": result.get("revision_count", 0),
+            "max_revisions": result.get("max_revisions", 0),
+        },
+        "user_profile": result.get("user_profile"),
+    }
+
+
 @app.post("/plan")
 def plan(req: PlanRequest):
     result = GRAPH.invoke(
@@ -74,13 +92,12 @@ def plan(req: PlanRequest):
     if "__interrupt__" in result:
         return {
             "status": "input_required",
+            "thread_id": req.thread_id,
             "interrupt": result["__interrupt__"],
         }
 
-    return {
-        "status": "completed",
-        "result": result,
-    }
+    return format_completed_response(req.thread_id, result)
+
 
 @app.post("/plan/resume")
 def resume_plan(req: ResumeRequest):
@@ -93,13 +110,11 @@ def resume_plan(req: ResumeRequest):
     if "__interrupt__" in result:
         return {
             "status": "input_required",
+            "thread_id": req.thread_id,
             "interrupt": result["__interrupt__"],
         }
 
-    return {
-        "status": "completed",
-        "result": result,
-    }
+    return format_completed_response(req.thread_id, result)
 
 @app.post("/plan/stream")
 def stream_plan(req: PlanRequest):
